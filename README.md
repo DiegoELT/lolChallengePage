@@ -6,12 +6,24 @@ First, you need to install Django in you virtual environment
 
 ```bat
 pipenv install django
+pipenv install mysqlclient
+```
+
+Since we are gonna be using MySQL for this particular project, you should create an shema for the project's database.
+
+```bat
+create database lolchallenge;
+create user loladmin identified by 'lolpwd';
+grant all on lolchallenge.* to 'loladmin'@'%';
+flush privileges;
 ```
 
 Now to get into the environment for this project, and set up the directories that are basic.
 
 ```bat
 pipenv shell
+python manage.py makemigrations
+python manage.py migrate
 ```
 
 Finally, to run the actual project you just need to run.
