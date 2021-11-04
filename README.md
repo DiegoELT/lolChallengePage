@@ -12,9 +12,9 @@ pipenv install mysqlclient
 Since we are gonna be using MySQL for this particular project, you should create an shema for the project's database.
 
 ```bat
-create database lolchallenge;
+create database lol_challenge;
 create user loladmin identified by 'lolpwd';
-grant all on lolchallenge.* to 'loladmin'@'%';
+grant all on lol_challenge.* to 'loladmin'@'%';
 flush privileges;
 ```
 

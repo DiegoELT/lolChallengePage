@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'lolChallengePage.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'lolchallenge',
+        'NAME': 'lol_challenge',
         'USER': 'loladmin',
         'PASSWORD': 'lolpwd',
         'HOST': 'localhost',

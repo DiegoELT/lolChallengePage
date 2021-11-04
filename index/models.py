@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django.urls import reverse
 import uuid
 
@@ -12,7 +13,7 @@ class User(models.Model):
       return self.username
 
   def get_absolute_url(self):
-    return reverse('user-detail', args=[str(self.id)])
+    return reverse('user-detail', args=[str(self.username)])
 
 class Player(models.Model):
   riot_id = models.CharField(max_length=100, primary_key=True)
@@ -42,6 +43,7 @@ class Player(models.Model):
 
 class Leaderboard(models.Model):
   leaderboard_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='ID correspondiente a la creación de la tabla de jugadores.')
+  username = models.ForeignKey('User', on_delete=models.CASCADE)
   is_challenge = models.BooleanField(help_text='La tabla de jugadores es un challenge, y por lo tanto tiene un limite de tiempo.')
   finish_date = models.DateField(null=True, blank=True, help_text='La fecha de final del challenge de la tabla.')
   name = models.CharField(max_length=20, help_text='Ingresa de la Leaderboard que vas a crear.')
@@ -58,8 +60,7 @@ class LeaderboardKey(models.Model):
   leaderboard_id = models.ForeignKey('Leaderboard', on_delete=models.CASCADE)
 
   def __str__(self):
-    return self.riot_id
+    return '%s (%s)' % (self.Player.riot_id, self.Leaderboard.leaderboard_id)
 
   def get_absolute_url(self):
-    return reverse('leaderboard-key-detail', args=[str(self.riot_id), str(self.leaderboard_id)])
-
+    return reverse('leaderboard-key-detail', args=[str(self.id)])
