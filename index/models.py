@@ -1,20 +1,10 @@
 from django.db import models
+from django.conf import settings
 from django.db.models.deletion import CASCADE
 from django.urls import reverse
 import uuid
 
 # Create your models here.
-class User(models.Model):
-  username = models.CharField(max_length=20, primary_key=True, help_text='Ingresa un nombre de usuario.')
-  password = models.CharField(max_length=50, help_text='Ingresa una contraseña. Trata de hacerla compleja por tu seguridad.')
-  email = models.EmailField(help_text='Ingresa un email. Puede ser utilizado en caso pierdas tu contraseña.')
-
-  def __str__(self):
-      return self.username
-
-  def get_absolute_url(self):
-    return reverse('user-detail', args=[str(self.username)])
-
 class Player(models.Model):
   riot_id = models.CharField(max_length=100, primary_key=True)
   summoner_name = models.CharField(max_length=20, help_text='Ingresa el Summoner Name del jugador.')
@@ -43,7 +33,7 @@ class Player(models.Model):
 
 class Leaderboard(models.Model):
   leaderboard_id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='ID correspondiente a la creación de la tabla de jugadores.')
-  username = models.ForeignKey('User', on_delete=models.CASCADE)
+  user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
   is_challenge = models.BooleanField(help_text='La tabla de jugadores es un challenge, y por lo tanto tiene un limite de tiempo.')
   finish_date = models.DateField(null=True, blank=True, help_text='La fecha de final del challenge de la tabla.')
   name = models.CharField(max_length=20, help_text='Ingresa de la Leaderboard que vas a crear.')
