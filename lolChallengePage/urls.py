@@ -23,3 +23,7 @@ urlpatterns = [
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('img/favicon.ico'))),
     path('', include('index.urls'))
 ]
+
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls'))
+]
