@@ -13,4 +13,8 @@ def index(request):
 
   return render(request, 'home.html', context = {'num_leaderboards': num_leaderboards, 'num_players': num_players, 'num_visits': num_visits})
 
+def tabla(request):
+  return render(request, 'leaderboard.html')
+
+
 # Create your views here.
